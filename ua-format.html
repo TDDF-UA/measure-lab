@@ -1,0 +1,228 @@
+<title>Measure Lab — UA page draft</title>
+<style>
+  :root{
+    --paper:#FFFFFF; --ink:#1B365F; --ink-soft:#3E5170; --line:#D7DCE4;
+    --navy:#0D2543; --red:#D3273A; --link:#1D74D7; --sidebar:#F5F6F8;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#12181F; --ink:#DCE4EE; --ink-soft:#A9B6C6; --line:#2A3644;
+      --navy:#0D2543; --red:#E8546A; --link:#6FB0F2; --sidebar:#182230;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#12181F; --ink:#DCE4EE; --ink-soft:#A9B6C6; --line:#2A3644;
+    --navy:#0D2543; --red:#E8546A; --link:#6FB0F2; --sidebar:#182230;
+  }
+  *{box-sizing:border-box;}
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; font-size:18px; line-height:1.6; }
+  .wrap{ max-width:900px; margin:0 auto; padding:0 24px; }
+  a{ color:var(--link); }
+  h1,h2,h3{ font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; margin:0; }
+
+  /* identity bar */
+  .idbar{ background:var(--paper); border-bottom:1px solid var(--line); padding:10px 0; }
+  .idbar .row{ display:flex; align-items:center; gap:10px; }
+  .idbar .mark{ width:26px; height:26px; background:var(--red); border-radius:3px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:15px; flex:none; }
+  .idbar .word{ font-size:15px; font-weight:700; color:var(--ink); }
+
+  /* department bar */
+  .deptbar{ background:var(--navy); color:#fff; padding:14px 0 0; }
+  .deptbar .dname{ font-size:14px; font-weight:700; letter-spacing:0.02em; text-transform:uppercase; opacity:0.95; }
+  .crumbs{ margin-top:10px; padding-bottom:12px; font-size:12.5px; color:#B9C6D6; }
+  .crumbs a{ color:#B9C6D6; text-decoration:underline; }
+  .crumbs span{ opacity:0.6; margin:0 4px; }
+
+  /* hero banner */
+  .banner{ background:var(--navy); padding:30px 0 40px; }
+  .banner h1{ color:#fff; font-size:40px; font-weight:700; }
+  .banner p{ margin-top:10px; font-size:18px; color:#C7D3E2; max-width:60ch; }
+
+  /* jump nav = List-of-links webpart */
+  .jumpnav{ background:var(--sidebar); border-bottom:1px solid var(--line); padding:14px 0; }
+  .jumpnav ul{ list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:6px 22px; }
+  .jumpnav a{ font-size:14px; font-weight:700; text-decoration:none; color:var(--link); }
+  .jumpnav a:hover{ text-decoration:underline; }
+
+  section{ padding:38px 0; border-bottom:1px solid var(--line); }
+  section h2{ font-size:24px; font-weight:700; color:var(--ink); margin-bottom:16px; }
+  section p{ color:var(--ink); margin:0 0 14px; max-width:70ch; }
+  section ul{ color:var(--ink); margin:0 0 14px; padding-left:22px; max-width:70ch; }
+  section li{ margin-bottom:6px; }
+
+  .note{
+    font-size:13.5px; font-style:italic; color:var(--ink-soft);
+    background:var(--sidebar); border:1px dashed var(--line); padding:8px 12px; margin-top:10px; display:inline-block;
+  }
+
+  .proj-item{ border-left:3px solid var(--navy); padding:4px 0 4px 16px; margin-bottom:18px; }
+  .proj-item .meta{ font-size:12.5px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.03em; font-weight:700; }
+  .proj-item h3{ font-size:18px; margin:3px 0 5px; color:var(--ink); font-weight:700; }
+  .proj-item p{ margin:0; font-size:15.5px; }
+
+  .team-col h3{ font-size:13px; text-transform:uppercase; letter-spacing:0.05em; color:var(--red); margin-bottom:10px; font-weight:700; }
+  .team-cols{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  @media (max-width:700px){ .team-cols{ grid-template-columns:1fr; } }
+  .team-cols ul{ padding-left:18px; margin:0; font-size:15.5px; }
+
+  .partner-tags{ display:flex; flex-wrap:wrap; gap:8px; }
+  .partner-tags span{ font-size:14px; color:var(--ink); border:1px solid var(--line); padding:5px 12px; border-radius:3px; }
+
+  footer.contact-bar{ background:var(--navy); padding:30px 0 36px; }
+  footer.contact-bar h2{ font-size:16px; color:#fff; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; border:none; }
+  footer.contact-bar p{ margin-top:8px; color:#C7D3E2; font-size:16px; }
+  footer.contact-bar a{ color:#fff; }
+</style>
+
+<div class="idbar">
+  <div class="wrap row">
+    <span class="mark">U</span>
+    <span class="word">University of Antwerp</span>
+  </div>
+</div>
+
+<div class="deptbar">
+  <div class="wrap">
+    <div class="dname">🏠 Research Group Product Development</div>
+    <div class="crumbs">
+      <a href="#">Research groups</a><span>›</span><a href="#">Research Group Product Development</a><span>›</span><a href="#">Research labs</a><span>›</span>Measure Lab
+    </div>
+  </div>
+</div>
+
+<div class="banner">
+  <div class="wrap">
+    <h1>Measure Lab</h1>
+    <p>Physical measurement for medical device design</p>
+  </div>
+</div>
+
+<nav class="jumpnav">
+  <div class="wrap">
+    <ul>
+      <li><a href="#context">Context</a></li>
+      <li><a href="#topics">Topics</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#courses">Related courses</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#partners">Associations &amp; partners</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<section id="context">
+  <h2>Context</h2>
+  <p>The Measure Lab is the applied measurement lab within Product Development, working chiefly on medical products, devices and diagnostics: defining new requirements for an existing product, redesigning products already in clinical use, and developing entirely new devices where no commercial equivalent exists.</p>
+  <p>The lab pairs physical measurement — mechanical, dimensional and biosensing — with a repeatable five-step design methodology: problem statement, component fabrication, clean assembly, testing &amp; validation, and results &amp; outcomes. Devices developed or validated through the lab range from wearable biosensors and reusable surgical textiles to drone-delivered medical payloads and hospital equipment prototypes. Patients, clinicians and biomedical researchers are kept in the development loop throughout, with the aim of producing evidence that carries forward into further studies, publications and patent filings.</p>
+  <p>Beyond medical devices, the same measurement approach is applied to maritime and industrial problems, including port operations and fishing-gear safety.</p>
+</section>
+
+<section id="topics">
+  <h2>Topics</h2>
+  <ul>
+    <li>Medical device design — new requirements, redesigns and entirely new products</li>
+    <li>Wearable and minimally-invasive biosensors (microneedle, potentiometric, electrochemical)</li>
+    <li>Reusable and sterilisable medical textiles</li>
+    <li>Physical and mechanical measurement and validation (tensile, adhesion, ingress, microscopy)</li>
+    <li>Rapid prototyping and 3D printing for functional proof-of-concept</li>
+    <li>Drone-based medical logistics</li>
+    <li>Maritime and industrial measurement</li>
+  </ul>
+</section>
+
+<section id="projects">
+  <h2>Projects</h2>
+  <p>A selection of funded projects the lab currently runs or has recently completed:</p>
+
+  <div class="proj-item"><span class="meta">ITM Antwerp · 2025–ongoing</span><h3>One4All</h3><p>A locally producible, automated-system-compatible aerobic blood culture flask for sepsis diagnosis, prototyped in Antwerp with the Institute of Tropical Medicine and piloted toward local batch production in Benin.</p></div>
+  <div class="proj-item"><span class="meta">IOF · 2026–2027</span><h3>NeoVOC</h3><p>Sampling device for volatile compounds in ventilated neonates.</p></div>
+  <div class="proj-item"><span class="meta">PRIVE · 2024–2027</span><h3>SafeTrawl I &amp; II</h3><p>Physical measurement supporting the safety of trawl-net fishing gear.</p></div>
+  <div class="proj-item"><span class="meta">BOF · 2025–2027</span><h3>TEAMBIO</h3><p>Technological Enablement for Advancements in Manufacturing through Bio-intelligence.</p></div>
+  <div class="proj-item"><span class="meta">EU-KADER · 2023–2027</span><h3>Nature4Nature</h3><p>Filtering nature's diversity for nature-friendly implementations, with the REuse Lab.</p></div>
+  <div class="proj-item"><span class="meta">IOF · 2024–2025</span><h3>INFLUXO</h3><p>Fluidic module for high-throughput microscopy of intact organoids.</p></div>
+  <div class="proj-item"><span class="meta">VLAIO · 2024–2026</span><h3>REmedi</h3><p>Reusable, qualitative medical packaging.</p></div>
+  <div class="proj-item"><span class="meta">FWO · 2022–2026</span><h3>Femtosecond pulsed laser micromachining</h3><p>Laser-based micromachining for medical device manufacture.</p></div>
+  <div class="proj-item"><span class="meta">VLAIO · completed 2024</span><h3>reCURE</h3><p>Smart, reusable and qualitative healthcare products.</p></div>
+  <div class="proj-item"><span class="meta">BOF · completed 2024</span><h3>PRINT-4-POCT</h3><p>Millifluidic devices for point-of-care testing.</p></div>
+
+  <p style="margin-top:18px;"><strong>PhD theses conducted within this lab:</strong></p>
+  <p>Andres Vanhooydonck, Jochen Vleugels, Omar Kheir and Marieke Van Camp all completed their doctorates here — see Team below. Kaat Dhondt's PhD is ongoing, spanning REmedi, reCURE and reCURE2.</p>
+  <p class="note">Confirm individual thesis titles before this goes live — not listed here yet.</p>
+</section>
+
+<section id="services">
+  <h2>Services</h2>
+  <p><strong>For academia:</strong></p>
+  <ul>
+    <li>Physical and mechanical testing (tensile, adhesion, ingress, microscopy) as a shared facility</li>
+    <li>Rapid prototyping and functional proof-of-concept builds</li>
+    <li>Co-supervision of master's theses and PhD trajectories bridging design and measurement</li>
+  </ul>
+  <p><strong>For industry and healthcare partners:</strong></p>
+  <ul>
+    <li>Medical device design consultancy — requirements definition, redesign, new product development</li>
+    <li>Support moving a concept toward MDR/IVDR-regulated development (design &amp; development, verification &amp; validation)</li>
+    <li>Joint master's thesis projects and applied proof-of-concept development</li>
+  </ul>
+</section>
+
+<section id="courses">
+  <h2>Related courses</h2>
+  <ul>
+    <li>Product and Engineering (Master's programme)</li>
+    <li>ARCHES</li>
+    <li>TDD, Module 1</li>
+  </ul>
+  <p class="note">Confirm the exact course/module titles as they should appear on the site.</p>
+</section>
+
+<section id="team">
+  <h2>Team</h2>
+  <div class="team-cols">
+    <div class="team-col">
+      <h3>Principal investigator</h3>
+      <ul><li>Prof. dr. Regan Watts</li></ul>
+    </div>
+    <div class="team-col">
+      <h3>Active researchers</h3>
+      <ul>
+        <li>Ralv Lundahl</li>
+        <li>Arno Vereecken</li>
+        <li>Kaat Dhondt — REmedi, reCURE, reCURE2, cross-linked with the REuse Lab</li>
+      </ul>
+    </div>
+    <div class="team-col">
+      <h3>Alumni</h3>
+      <ul>
+        <li>Andres Vanhooydonck, PhD</li>
+        <li>Jochen Vleugels, PhD</li>
+        <li>Omar Kheir, PhD</li>
+        <li>Marieke Van Camp, PhD</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="partners" style="border-bottom:none;">
+  <h2>Associations &amp; partners</h2>
+  <div class="partner-tags">
+    <span>UZA</span><span>Helicus</span><span>A-PECS (Karolien De Wael)</span><span>Ergotrics</span>
+    <span>Bosch</span><span>ABB</span><span>Voxdale</span><span>OxyPoint</span><span>INBO</span>
+    <span>KU Leuven — Surgical Robotics</span><span>Antwerp Design Factory</span>
+    <span>REuse Lab (Els Du Bois)</span><span>Human Lab (Stijn Verwulgen)</span>
+    <span>Augmented Crafting Lab (Jouke Verlinden)</span>
+  </div>
+</section>
+
+</div>
+
+<footer class="contact-bar" id="contact">
+  <div class="wrap">
+    <h2>Contact</h2>
+    <p>Prof. dr. Regan Watts — <a href="mailto:regan.watts@uantwerpen.be">regan.watts@uantwerpen.be</a></p>
+  </div>
+</footer>
