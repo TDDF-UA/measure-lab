@@ -1,0 +1,1145 @@
+<title>The Measure Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F1F5F7;
+    --paper-raised:#FFFFFF;
+    --ink:#12202A;
+    --ink-soft:#3E5561;
+    --ink-faint:#6C818B;
+    --line:#C7D3D8;
+    --accent:#2C6D93;
+    --accent-strong:#1C4A66;
+    --accent-soft:#DCEAF1;
+    --ua-red:#C6102B;
+    --ua-red-soft:#F6DEE1;
+    --shadow: 0 1px 2px rgba(18,32,42,0.06), 0 8px 24px -12px rgba(18,32,42,0.18);
+    --radius: 3px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0D171E;
+      --paper-raised:#142330;
+      --ink:#E9F1F5;
+      --ink-soft:#A9BCC5;
+      --ink-faint:#77909B;
+      --line:#26414F;
+      --accent:#6FB4DA;
+      --accent-strong:#9ED0EC;
+      --accent-soft:#16333F;
+      --ua-red:#E85B72;
+      --ua-red-soft:#3A1620;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0D171E;
+    --paper-raised:#142330;
+    --ink:#E9F1F5;
+    --ink-soft:#A9BCC5;
+    --ink-faint:#77909B;
+    --line:#26414F;
+    --accent:#6FB4DA;
+    --accent-strong:#9ED0EC;
+    --accent-soft:#16333F;
+    --ua-red:#E85B72;
+    --ua-red-soft:#3A1620;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Public Sans', system-ui, -apple-system, sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--accent); color:var(--paper-raised); }
+  a{ color:var(--accent-strong); }
+  h1,h2,h3,h4{
+    font-family:'Big Shoulders Display', system-ui, sans-serif;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+    text-wrap:balance;
+    margin:0;
+    color:var(--ink);
+  }
+  p{ margin:0; }
+  .mono{ font-family:'IBM Plex Mono', ui-monospace, monospace; }
+  .wrap{ max-width:1160px; margin:0 auto; padding:0 28px; }
+  img{ max-width:100%; display:block; }
+  .visually-hidden{ position:absolute; width:1px;height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:2px;
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    background:color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-inner{
+    max-width:1160px; margin:0 auto; padding:0 28px;
+    display:flex; align-items:center; justify-content:space-between;
+    height:56px;
+  }
+  .brand{
+    display:flex; align-items:baseline; gap:8px;
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:800; font-size:19px; letter-spacing:0.02em;
+    text-transform:uppercase; text-decoration:none; color:var(--ink);
+    white-space:nowrap;
+  }
+  .brand small{
+    font-family:'IBM Plex Mono', monospace; font-weight:500;
+    font-size:10.5px; color:var(--accent); text-transform:none;
+    letter-spacing:0.03em;
+  }
+  .topnav{
+    display:flex; gap:22px; overflow-x:auto; scrollbar-width:none;
+  }
+  .topnav::-webkit-scrollbar{ display:none; }
+  .topnav a{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px; letter-spacing:0.04em; text-transform:uppercase;
+    color:var(--ink-soft); text-decoration:none; white-space:nowrap;
+    padding:4px 0; border-bottom:2px solid transparent;
+  }
+  .topnav a:hover{ color:var(--accent-strong); border-color:var(--accent); }
+
+  /* ---------- Hero ---------- */
+  .hero{ padding:64px 0 40px; }
+  .hero-eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono', monospace; font-size:12px;
+    letter-spacing:0.08em; text-transform:uppercase; color:var(--ua-red);
+    margin-bottom:18px;
+  }
+  .hero-eyebrow::before{
+    content:''; width:22px; height:2px; background:var(--ua-red);
+  }
+  h1.hero-title{
+    font-size:clamp(42px, 8vw, 92px);
+    line-height:0.94;
+    letter-spacing:0;
+  }
+  h1.hero-title em{
+    font-style:normal; color:var(--accent);
+  }
+  .hero-sub{
+    margin-top:18px;
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:700; text-transform:uppercase;
+    font-size:clamp(17px, 2.4vw, 24px);
+    color:var(--ink-soft); letter-spacing:0.01em;
+    max-width:720px;
+  }
+  .hero-lede{
+    margin-top:22px; max-width:640px;
+    font-size:17px; color:var(--ink-soft);
+  }
+  .hero-lede strong{ color:var(--ink); font-weight:600; }
+  .hero-actions{
+    margin-top:30px; display:flex; gap:12px; flex-wrap:wrap;
+  }
+  .btn{
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px;
+    letter-spacing:0.03em; text-transform:uppercase;
+    padding:11px 18px; border-radius:var(--radius);
+    text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+    border:1px solid var(--line);
+    transition:border-color .15s, background .15s, color .15s;
+  }
+  .btn-primary{ background:var(--accent); border-color:var(--accent); color:#fff; }
+  .btn-primary:hover{ background:var(--accent-strong); border-color:var(--accent-strong); }
+  .btn-ghost{ color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--accent); color:var(--accent-strong); }
+
+  /* meta strip */
+  .meta-strip{
+    margin-top:44px; padding-top:22px; border-top:1px solid var(--line);
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:20px;
+  }
+  .meta-item .k{
+    font-family:'IBM Plex Mono', monospace; font-size:10.5px;
+    text-transform:uppercase; letter-spacing:0.07em; color:var(--ink-faint);
+    display:block; margin-bottom:4px;
+  }
+  .meta-item .v{ font-size:14.5px; color:var(--ink); font-weight:600; }
+
+  /* ---------- generic section shell ---------- */
+  section{ padding:76px 0; border-top:1px solid var(--line); }
+  section.band-accent{
+    background:var(--accent);
+    border-top:none; color:#fff;
+  }
+  section.band-accent h2, section.band-accent .sec-kicker{ color:#fff; }
+  section.band-soft{ background:var(--accent-soft); }
+  section.band-raised{ background:var(--paper-raised); }
+
+  .sec-head{ max-width:680px; margin-bottom:44px; }
+  .sec-kicker{
+    font-family:'IBM Plex Mono', monospace; font-size:12px;
+    letter-spacing:0.08em; text-transform:uppercase; color:var(--ua-red);
+    display:block; margin-bottom:12px;
+  }
+  section.band-accent .sec-kicker{ color:#DCEAF1; }
+  .sec-head h2{ font-size:clamp(30px,4.4vw,48px); line-height:1; }
+  .sec-head p{ margin-top:16px; color:var(--ink-soft); font-size:16px; }
+  section.band-accent .sec-head p{ color:#E4F0F6; }
+
+  /* ---------- Methodology ---------- */
+  .method-rail{
+    display:grid; grid-template-columns:repeat(5,1fr); gap:1px;
+    background:rgba(255,255,255,0.25);
+    border:1px solid rgba(255,255,255,0.25);
+  }
+  .method-step{
+    background:var(--accent); padding:26px 20px 24px;
+    display:flex; flex-direction:column; gap:14px; min-height:230px;
+  }
+  .method-step .num{
+    font-family:'Big Shoulders Display', sans-serif; font-weight:800;
+    font-size:40px; color:rgba(255,255,255,0.4); line-height:1;
+  }
+  .method-step .icon{ width:40px; height:40px; }
+  .method-step .icon svg{ width:100%; height:100%; }
+  .method-step h3{ color:#fff; font-size:19px; line-height:1.05; }
+  .method-step p{ color:#DCEAF1; font-size:13.5px; }
+  .method-step ul{ margin:0; padding-left:16px; color:#DCEAF1; font-size:13.5px; }
+  .method-step li{ margin-bottom:3px; }
+
+  @media (max-width:880px){
+    .method-rail{ grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width:560px){
+    .method-rail{ grid-template-columns:1fr; }
+  }
+
+  /* ---------- focus / research statement ---------- */
+  .focus-grid{
+    display:grid; grid-template-columns:1.1fr 1fr; gap:56px; align-items:start;
+  }
+  @media (max-width:820px){ .focus-grid{ grid-template-columns:1fr; } }
+  .focus-modes{ display:flex; flex-direction:column; gap:0; }
+  .focus-mode{
+    padding:18px 0; border-top:1px solid var(--line);
+    display:grid; grid-template-columns:56px 1fr; gap:16px;
+  }
+  .focus-mode:last-child{ border-bottom:1px solid var(--line); }
+  .focus-mode .tag{
+    font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--accent);
+    letter-spacing:0.04em;
+  }
+  .focus-mode h4{ font-size:16px; text-transform:none; letter-spacing:0; margin-bottom:4px; }
+  .focus-mode p{ color:var(--ink-soft); font-size:14.5px; }
+
+  .stat-card{
+    background:var(--paper-raised); border:1px solid var(--line);
+    padding:24px; box-shadow:var(--shadow);
+  }
+  .stat-card h4{
+    font-size:12px; letter-spacing:0.06em; color:var(--ink-faint);
+    text-transform:uppercase; margin-bottom:16px; font-family:'IBM Plex Mono',monospace; font-weight:500;
+  }
+  .stat-card ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:12px; }
+  .stat-card li{
+    font-size:14.5px; color:var(--ink-soft); padding-left:16px; position:relative;
+  }
+  .stat-card li::before{
+    content:'—'; position:absolute; left:0; color:var(--accent);
+  }
+  .stat-card li strong{ color:var(--ink); font-weight:600; }
+
+  /* ---------- device gallery ---------- */
+  .device-grid{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1px;
+    background:var(--line); border:1px solid var(--line);
+  }
+  .device-card{
+    background:var(--paper-raised); padding:20px; display:flex; flex-direction:column; gap:10px;
+    min-height:150px;
+  }
+  .device-card .dept{
+    font-family:'IBM Plex Mono', monospace; font-size:10.5px; text-transform:uppercase;
+    letter-spacing:0.05em; color:var(--ua-red);
+  }
+  .device-card h4{
+    font-size:16.5px; text-transform:none; letter-spacing:0; line-height:1.15;
+  }
+  .device-card p{ font-size:13px; color:var(--ink-soft); flex:1; }
+  .device-card .method{
+    font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--accent);
+    border:1px solid var(--accent-soft); background:var(--accent-soft);
+    padding:3px 7px; border-radius:2px; align-self:flex-start;
+  }
+
+  /* ---------- featured projects ---------- */
+  .proj{
+    display:grid; grid-template-columns:0.9fr 1.1fr; gap:48px; align-items:start;
+    padding:40px 0; border-top:1px solid var(--line);
+  }
+  .proj:first-of-type{ border-top:none; padding-top:0; }
+  @media (max-width:860px){ .proj{ grid-template-columns:1fr; gap:24px; } }
+  .proj-num{
+    font-family:'Big Shoulders Display', sans-serif; font-weight:800;
+    font-size:15px; color:var(--accent); letter-spacing:0.04em; margin-bottom:10px;
+    display:block;
+  }
+  .proj h3{ font-size:clamp(24px,3vw,32px); line-height:1.03; margin-bottom:14px; }
+  .proj p{ color:var(--ink-soft); font-size:15px; margin-bottom:12px; }
+  .proj p:last-child{ margin-bottom:0; }
+  .proj-stats{
+    display:flex; flex-wrap:wrap; gap:10px; margin-top:18px;
+  }
+  .proj-stat{
+    border:1px solid var(--line); padding:10px 12px; min-width:104px;
+    background:var(--paper);
+  }
+  .proj-stat .v{
+    font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:15px; color:var(--ink);
+    display:block;
+  }
+  .proj-stat .l{
+    font-family:'IBM Plex Mono', monospace; font-size:10px; color:var(--ink-faint);
+    text-transform:uppercase; letter-spacing:0.04em;
+  }
+  .proj-cite{
+    margin-top:16px; padding:14px 16px; border-left:2px solid var(--accent);
+    background:var(--paper-raised); font-size:13px; color:var(--ink-soft);
+    font-style:italic;
+  }
+
+  /* funding table */
+  .fund-table{ border:1px solid var(--line); background:var(--paper-raised); margin-bottom:8px; }
+  .fund-row{
+    display:grid; grid-template-columns:1fr 90px 150px 100px; gap:14px;
+    padding:12px 16px; border-top:1px solid var(--line); align-items:center;
+  }
+  .fund-row:first-child{ border-top:none; }
+  .fund-row span{ font-size:13.5px; color:var(--ink-soft); }
+  .fund-row.fund-head span{
+    font-family:'IBM Plex Mono', monospace; font-size:10.5px; text-transform:uppercase;
+    letter-spacing:0.05em; color:var(--ink-faint);
+  }
+  .fund-row .mono{ font-family:'IBM Plex Mono', monospace; font-size:12.5px; }
+  @media (max-width:700px){
+    .fund-row{ grid-template-columns:1fr; gap:4px; padding:14px 16px; }
+    .fund-row.fund-head{ display:none; }
+    .fund-row .mono, .fund-row .status{ justify-self:start; }
+  }
+  .status{
+    font-family:'IBM Plex Mono', monospace; font-size:10.5px; text-transform:uppercase;
+    letter-spacing:0.03em; padding:3px 8px; border-radius:2px; width:fit-content;
+  }
+  .status.active{ color:#1B7A4A; background:#DDF0E4; }
+  .status.up{ color:var(--accent-strong); background:var(--accent-soft); }
+  .status.done{ color:var(--ink-faint); background:var(--paper); border:1px solid var(--line); }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]) .status.active{ color:#7FE3AE; background:#123522; }
+  }
+  :root[data-theme="dark"] .status.active{ color:#7FE3AE; background:#123522; }
+
+  /* regulatory pathway */
+  .pathway{
+    margin-top:8px; display:flex; overflow-x:auto; gap:0;
+    border:1px solid var(--line);
+  }
+  .pathway-step{
+    flex:1 0 128px; padding:16px 14px; border-right:1px solid var(--line);
+    background:var(--paper-raised);
+  }
+  .pathway-step:last-child{ border-right:none; }
+  .pathway-step .p{
+    font-family:'Big Shoulders Display', sans-serif; font-weight:800; font-size:22px;
+    color:var(--ua-red); display:block;
+  }
+  .pathway-step .l{
+    font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--ink-soft);
+    text-transform:uppercase; letter-spacing:0.02em; margin-top:4px; display:block;
+  }
+
+  /* ---------- masterprojects ---------- */
+  .mp-list{ display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); }
+  .mp-card{ background:var(--paper-raised); padding:28px 30px; display:grid; grid-template-columns:150px 1fr; gap:26px; }
+  @media (max-width:700px){ .mp-card{ grid-template-columns:1fr; gap:12px; } }
+  .mp-year{ font-family:'IBM Plex Mono', monospace; color:var(--accent); font-size:13px; }
+  .mp-status{
+    display:inline-block; margin-top:10px; font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px; text-transform:uppercase; letter-spacing:0.04em;
+    padding:3px 8px; border:1px solid var(--line); color:var(--ink-faint);
+  }
+  .mp-card h3{ font-size:22px; text-transform:none; letter-spacing:0; margin-bottom:8px; line-height:1.15; }
+  .mp-card p{ color:var(--ink-soft); font-size:14.5px; }
+  .mp-card .who{ font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--ink-faint); margin-top:10px; display:block; }
+
+  /* ---------- masterprojects full table ---------- */
+  .mp-table-intro{ margin:44px 0 18px; font-size:14.5px; color:var(--ink-soft); max-width:640px; }
+  .mp-table-wrap{ overflow-x:auto; border:1px solid var(--line); background:var(--paper-raised); }
+  table.mp-table{ border-collapse:collapse; width:100%; min-width:760px; }
+  table.mp-table th{
+    text-align:left; font-family:'IBM Plex Mono', monospace; font-size:10.5px;
+    text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-faint);
+    padding:10px 14px; border-bottom:1px solid var(--line); white-space:nowrap;
+  }
+  table.mp-table td{
+    padding:10px 14px; border-bottom:1px solid var(--line); font-size:13.5px;
+    color:var(--ink-soft); vertical-align:top;
+  }
+  table.mp-table td.title{ color:var(--ink); font-weight:600; }
+  table.mp-table tr.yr-row td{
+    background:var(--accent-soft); color:var(--accent-strong);
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px; font-weight:600;
+    letter-spacing:0.04em; text-transform:uppercase; border-bottom:1px solid var(--line);
+  }
+  table.mp-table .sdg{
+    display:inline-block; font-family:'IBM Plex Mono', monospace; font-size:10.5px;
+    color:var(--ua-red); white-space:nowrap;
+  }
+  table.mp-table .kw{ font-size:12px; color:var(--ink-faint); }
+
+  /* ---------- how we collaborate ---------- */
+  .collab-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+  @media (max-width:760px){ .collab-grid{ grid-template-columns:1fr; } }
+  .collab-card{ background:var(--paper-raised); padding:26px; display:flex; flex-direction:column; gap:10px; }
+  .collab-card .cnum{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--accent); letter-spacing:0.04em; }
+  .collab-card h3{ font-size:19px; text-transform:none; letter-spacing:0; line-height:1.15; }
+  .collab-card p{ font-size:14px; color:var(--ink-soft); }
+  .collab-card .ex{ margin-top:6px; font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--ink-faint); }
+  .collab-card .ex strong{ color:var(--accent-strong); font-weight:600; }
+
+  /* ---------- infrastructure spec sheet ---------- */
+  .spec-sheet{
+    border:1px solid var(--line); background:var(--paper-raised);
+  }
+  .spec-row{
+    display:grid; grid-template-columns:220px 1fr; border-top:1px solid var(--line);
+  }
+  .spec-row:first-child{ border-top:none; }
+  @media (max-width:640px){ .spec-row{ grid-template-columns:1fr; } }
+  .spec-row .k{
+    padding:16px 20px; font-family:'IBM Plex Mono', monospace; font-size:12px;
+    text-transform:uppercase; letter-spacing:0.04em; color:var(--ink-faint);
+    border-right:1px solid var(--line); display:flex; align-items:center;
+  }
+  @media (max-width:640px){ .spec-row .k{ border-right:none; border-bottom:1px solid var(--line); } }
+  .spec-row .v{ padding:16px 20px; font-size:14.5px; color:var(--ink-soft); }
+  .spec-row .v strong{ color:var(--ink); font-weight:600; }
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--accent-strong);
+    background:var(--accent-soft); border:1px solid var(--accent-soft);
+    padding:4px 9px; border-radius:2px;
+  }
+
+  /* ---------- education + sectors two-col ---------- */
+  .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:56px; }
+  @media (max-width:860px){ .two-col{ grid-template-columns:1fr; gap:44px; } }
+  .edu-item{ padding:18px 0; border-top:1px solid var(--line); }
+  .edu-item:first-child{ border-top:none; }
+  .edu-item h4{ font-size:16px; text-transform:none; letter-spacing:0; margin-bottom:6px; }
+  .edu-item p{ font-size:14px; color:var(--ink-soft); }
+  .edu-item .tag{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--accent); letter-spacing:0.04em; }
+
+  .sector-card{ padding:18px 0; border-top:1px solid var(--line); }
+  .sector-card:first-child{ border-top:none; }
+  .sector-card .yr{ font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--ua-red); }
+  .sector-card h4{ font-size:16px; text-transform:none; letter-spacing:0; margin:5px 0 6px; }
+  .sector-card p{ font-size:14px; color:var(--ink-soft); }
+
+  /* ---------- publications ---------- */
+  .pub-metrics{ display:flex; gap:36px; flex-wrap:wrap; margin-bottom:36px; }
+  .pub-metric .v{ font-family:'Big Shoulders Display', sans-serif; font-weight:800; font-size:40px; color:var(--accent); line-height:1; }
+  .pub-metric .l{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:0.05em; margin-top:4px; }
+  .pub-list{ display:flex; flex-direction:column; }
+  .pub-row{
+    display:grid; grid-template-columns:1fr auto; gap:16px; align-items:baseline;
+    padding:16px 0; border-top:1px solid var(--line);
+  }
+  .pub-row:first-child{ border-top:none; }
+  .pub-row .title{ font-size:15px; color:var(--ink); font-weight:600; line-height:1.35; }
+  .pub-row .authors{ font-size:13px; color:var(--ink-faint); margin-top:3px; }
+  .pub-row .venue{ font-size:13px; color:var(--ink-soft); font-style:italic; margin-top:3px; }
+  .pub-row .cites{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--accent-strong);
+    white-space:nowrap; text-align:right;
+  }
+  .pub-row .cites .n{ font-size:16px; font-weight:600; display:block; }
+
+  /* ---------- footer / contact ---------- */
+  footer{
+    background:var(--ink); color:var(--paper);
+    padding:64px 0 32px;
+  }
+  footer h2{ color:#fff; font-size:clamp(30px,4.4vw,46px); }
+  footer .plate{ margin-top:34px; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:28px; }
+  footer .plate .k{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:#6C818B; display:block; margin-bottom:6px; }
+  footer .plate a{ color:#DCEAF1; text-decoration:none; font-size:14.5px; }
+  footer .plate a:hover{ text-decoration:underline; }
+  footer .bottom{
+    margin-top:56px; padding-top:22px; border-top:1px solid #26414F;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:#6C818B;
+  }
+</style>
+
+<nav class="topbar">
+  <div class="topbar-inner">
+    <a href="#top" class="brand">The Measure Lab <small>UA · Product Development</small></a>
+    <div class="topnav">
+      <a href="#methodology">Methodology</a>
+      <a href="#instruments">Instruments</a>
+      <a href="#projects">Projects</a>
+      <a href="#masterprojects">Masterprojects</a>
+      <a href="#collaborate">Collaborate</a>
+      <a href="#infrastructure">Infrastructure</a>
+      <a href="#education">Education</a>
+      <a href="#sectors">Other sectors</a>
+      <a href="#publications">Publications</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <span class="hero-eyebrow">University of Antwerp · Faculty of Design Sciences · Product Development</span>
+    <h1 class="hero-title">The<br>Measure<br><em>Lab</em></h1>
+    <p class="hero-sub">Medical Device Design @ The Measure Lab</p>
+    <p class="hero-lede">We take physical <strong>measurement</strong> — mechanical, dimensional, biosensing — and pair it with a repeatable <strong>design methodology</strong> to move medical products from clinical problem to validated prototype: new requirements for existing devices, redesigns, and entirely new products for hospitals, clinics and beyond.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#methodology">See how we work →</a>
+      <a class="btn btn-ghost" href="https://www.uantwerpen.be/en/staff/regan-watts/" target="_blank" rel="noopener">UA staff profile</a>
+      <a class="btn btn-ghost" href="https://scholar.google.be/citations?user=gt9SsncAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
+    </div>
+    <div class="meta-strip">
+      <div class="meta-item"><span class="k">Lab lead</span><span class="v">Prof. dr. Regan Watts</span></div>
+      <div class="meta-item"><span class="k">Lab space</span><span class="v">50 m² — Stadscampus, Antwerp</span></div>
+      <div class="meta-item"><span class="k">Primary focus</span><span class="v">Medical products, devices &amp; diagnostics</span></div>
+      <div class="meta-item"><span class="k">Also active in</span><span class="v">Maritime &amp; industrial measurement</span></div>
+    </div>
+  </div>
+</header>
+
+<section class="band-accent" id="methodology">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-kicker">01 — Working method</span>
+      <h2>Five steps, one room</h2>
+      <p>Every device that comes through the lab moves through the same sequence — from a clinician's problem statement to data that goes back out into publications, patents and further trials.</p>
+    </div>
+
+    <div class="method-rail">
+      <div class="method-step">
+        <span class="num">01</span>
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" stroke="#fff" stroke-width="1.6"><circle cx="14" cy="10" r="4.6"/><path d="M7 27c0-5.5 3.5-9 7-9s7 3.5 7 9"/><path d="M25 12h9M25 17h6M25 22h4" stroke-linecap="round"/><path d="M22 30c2 2 6 2 8 0" stroke-linecap="round"/></svg>
+        </span>
+        <h3>Problem statement</h3>
+        <ul>
+          <li>Identify the clinical need the device must address</li>
+          <li>Generate initial ideas and potential solutions</li>
+          <li>Outline the design process</li>
+        </ul>
+      </div>
+      <div class="method-step">
+        <span class="num">02</span>
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" stroke="#fff" stroke-width="1.6"><rect x="4" y="6" width="21" height="16" rx="1"/><path d="M9 26h9" stroke-linecap="round"/><circle cx="30" cy="9" r="3.4"/><path d="M30 12.4V17M27 21c1 2 5 2 6 0" stroke-linecap="round"/><path d="M22 28l6 6M28 28l-6 6" stroke-linecap="round"/></svg>
+        </span>
+        <h3>Component fabrication</h3>
+        <ul>
+          <li>Employ CAD, FEA &amp; CFD to define geometry and behaviour</li>
+          <li>Manufacture parts with the appropriate technique</li>
+          <li>3D-print for rapid functional proof-of-concept</li>
+        </ul>
+      </div>
+      <div class="method-step">
+        <span class="num">03</span>
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" stroke="#fff" stroke-width="1.6"><path d="M8 8l8 10v14M24 8l-8 10"/><rect x="27" y="6" width="8" height="6" rx="1"/><path d="M31 12v6"/><rect x="26" y="26" width="10" height="8" rx="1"/><path d="M26 30h10"/></svg>
+        </span>
+        <h3>Clean assembly</h3>
+        <p>Components are brought together to form the complete device, with care taken to ensure proper fit and cleanliness at every joint.</p>
+      </div>
+      <div class="method-step">
+        <span class="num">04</span>
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" stroke="#fff" stroke-width="1.6"><path d="M13 6h14M20 6v6M11 30h18l-4-13H15z"/><circle cx="20" cy="21" r="2.4"/></svg>
+        </span>
+        <h3>Testing &amp; validation</h3>
+        <ul>
+          <li>Device testing</li>
+          <li>Microscopic inspection</li>
+          <li>Data collection</li>
+          <li>Evaluation of performance</li>
+        </ul>
+      </div>
+      <div class="method-step">
+        <span class="num">05</span>
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" stroke="#fff" stroke-width="1.6"><path d="M6 30V18M14 30V10M22 30V22M30 30V6" stroke-linecap="round"/><path d="M5 34h30" stroke-linecap="round"/></svg>
+        </span>
+        <h3>Results &amp; outcomes</h3>
+        <p>Findings go back out of the room: validated prototypes for further studies, and data that feeds publications and patent filings.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="focus">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-kicker">02 — Focus</span>
+      <h2>Medical products, devices &amp; diagnostics</h2>
+      <p>Medical device design is an enormous space. The lab keeps a deliberately tight scope: three ways of engaging with an existing or future product, built on a research position formed over eight years of hospital-facing prototyping work.</p>
+    </div>
+
+    <div class="focus-grid">
+      <div class="focus-modes">
+        <div class="focus-mode">
+          <span class="tag">MODE / 01</span>
+          <div><h4>New requirements for an existing product</h4><p>Working with clinicians and hospital staff to define what an already-marketed device should be able to do next.</p></div>
+        </div>
+        <div class="focus-mode">
+          <span class="tag">MODE / 02</span>
+          <div><h4>New designs for existing products</h4><p>Reusable, steerable or otherwise re-engineered versions of devices already in clinical use.</p></div>
+        </div>
+        <div class="focus-mode">
+          <span class="tag">MODE / 03</span>
+          <div><h4>Entirely new products</h4><p>Novel diagnostics and devices built from a clinical need with no existing commercial equivalent.</p></div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <h4>Where the lab sits today</h4>
+        <ul>
+          <li><strong>Routine 3D-printing</strong> of medical devices for functional proof-of-concept</li>
+          <li>Keeping <strong>patients, healthcare providers and biomedical researchers</strong> in the development loop</li>
+          <li><strong>Validation of pre-production devices</strong> before they leave the lab</li>
+          <li>Design work aimed at <strong>extending the lifetime</strong> of medical devices</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-raised" id="instruments">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-kicker">03 — Instruments, devices &amp; approaches</span>
+      <h2>Built, printed, tested</h2>
+      <p>A working sample of devices and instruments developed or validated through the lab, organised by clinical area — tagged with the fabrication route used to get from CAD file to bench.</p>
+    </div>
+
+    <div class="device-grid">
+      <div class="device-card">
+        <span class="dept">Revalidation</span>
+        <h4>Flexible ankle-foot orthosis</h4>
+        <p>Patient-personalised AFO combining a rigid frame with flexible print zones for gait support.</p>
+        <span class="method">HP MJF · FFF</span>
+      </div>
+      <div class="device-card">
+        <span class="dept">Nuclear medicine</span>
+        <h4>Mouse phantoms</h4>
+        <p>Small-animal imaging phantoms for calibrating preclinical scanning equipment.</p>
+        <span class="method">FFF</span>
+      </div>
+      <div class="device-card">
+        <span class="dept">Pharmacy · logistics</span>
+        <h4>Personalisation masks</h4>
+        <p>Face-scan-driven fit customisation, developed out of the FFP2/FFP3 respirator work.</p>
+        <span class="method">3D scan-fit</span>
+      </div>
+      <div class="device-card">
+        <span class="dept">Emergency</span>
+        <h4>Reusable suture kits</h4>
+        <p>Cleanroom-assembled reusable alternative to single-use suture kits.</p>
+        <span class="method">Cleanroom assembly</span>
+      </div>
+      <div class="device-card">
+        <span class="dept">Operating theatre</span>
+        <h4>Reusable surgical gowns</h4>
+        <p>Durable, launderable gown system built to withstand repeated sterilisation cycles.</p>
+        <span class="method">Ultrasonic welding</span>
+      </div>
+      <div class="device-card">
+        <span class="dept">Operating theatre</span>
+        <h4>DIPS — durable inflatable prone support</h4>
+        <p>Inflatable surgical positioning cushions, with Dr. Paul Depauw (Ergotrics).</p>
+        <span class="method">Inflatable / textile</span>
+      </div>
+      <div class="device-card">
+        <span class="dept">Ear · nose · throat</span>
+        <h4>3D-tympanoscope</h4>
+        <p>Low-cost 3D-printed otoscopy housing built around an imaging lens and LED ring.</p>
+        <span class="method">FFF</span>
+      </div>
+      <div class="device-card">
+        <span class="dept">Urology</span>
+        <h4>Smart potty-training</h4>
+        <p>Connected paediatric device supporting toilet-training behaviour tracking.</p>
+        <span class="method">Connected device</span>
+      </div>
+      <div class="device-card">
+        <span class="dept">Endocrinology · diabetes</span>
+        <h4>Reusable CGM housing (Lumeco)</h4>
+        <p>Reusable continuous-glucose-monitor components, see the Lumeco masterproject below.</p>
+        <span class="method">FFF</span>
+      </div>
+      <div class="device-card">
+        <span class="dept">Clinical lab</span>
+        <h4>Free-bilirubin sensor</h4>
+        <p>Compact sensor housing aimed at neonatal jaundice monitoring.</p>
+        <span class="method">FFF · Polyjet</span>
+      </div>
+      <div class="device-card">
+        <span class="dept">Clinical lab</span>
+        <h4>Blood–brain barrier chip</h4>
+        <p>Microfluidic organ-on-chip housing for blood–brain barrier studies.</p>
+        <span class="method">FFF · Polyjet</span>
+      </div>
+      <div class="device-card">
+        <span class="dept">Clinical lab</span>
+        <h4>Fluidic cell for organoids</h4>
+        <p>Perfusion housing for organoid culture, assembled under cleanroom conditions.</p>
+        <span class="method">Cleanroom assembly</span>
+      </div>
+      <div class="device-card">
+        <span class="dept">Clinical lab · A-PECS</span>
+        <h4>3D-printed microneedle sensor array</h4>
+        <p>Potentiometric biosensing platform built on a 3D-printed solid microneedle base.</p>
+        <span class="method">mSLA</span>
+      </div>
+      <div class="device-card">
+        <span class="dept">Clinical lab · A-PECS</span>
+        <h4>Wearable phenylalanine sensor</h4>
+        <p>Wristband biosensor for phenylalanine monitoring in PKU patients.</p>
+        <span class="method">FFF</span>
+      </div>
+      <div class="device-card">
+        <span class="dept">Clinical lab · A-PECS</span>
+        <h4>Microneedle sensor for immunosuppressants</h4>
+        <p>The lab's flagship concept-to-trial case study — full write-up below.</p>
+        <span class="method">mSLA</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-kicker">04 — Featured projects</span>
+      <h2>From bench to (almost) trial</h2>
+      <p>Three strands of ongoing work that show how the five-step method plays out over months, not days.</p>
+    </div>
+
+    <div class="fund-table">
+      <div class="fund-row fund-head">
+        <span>Project</span><span>Funder</span><span>Duration</span><span>Status</span>
+      </div>
+      <div class="fund-row"><span>NeoVOC — sampling device for volatile compounds in ventilated neonates</span><span class="mono">IOF</span><span class="mono">05/2026–04/2027</span><span class="status up">Upcoming</span></div>
+      <div class="fund-row"><span>SafeTrawl II</span><span class="mono">PRIVE</span><span class="mono">03/2026–09/2027</span><span class="status up">Upcoming</span></div>
+      <div class="fund-row"><span>TEAMBIO — Technological Enablement for Advancements in Manufacturing through Bio-intelligence</span><span class="mono">BOF</span><span class="mono">06/2025–05/2027</span><span class="status active">Active</span></div>
+      <div class="fund-row"><span>Nature4Nature — filtering nature's diversity for nature-friendly implementations</span><span class="mono">EU-KADER</span><span class="mono">03/2023–02/2027</span><span class="status active">Active</span></div>
+      <div class="fund-row"><span>INFLUXO — fluidic module for high-throughput microscopy of intact organoids</span><span class="mono">IOF</span><span class="mono">09/2024–08/2025</span><span class="status active">Active</span></div>
+      <div class="fund-row"><span>REmedi — for medical packaging</span><span class="mono">VLAIO</span><span class="mono">03/2024–03/2026</span><span class="status active">Active</span></div>
+      <div class="fund-row"><span>SafeTrawl I</span><span class="mono">PRIVE</span><span class="mono">03/2024–08/2025</span><span class="status active">Active</span></div>
+      <div class="fund-row"><span>Femtosecond pulsed laser micromachining</span><span class="mono">FWO</span><span class="mono">05/2022–04/2026</span><span class="status active">Active</span></div>
+      <div class="fund-row"><span>reCURE — smart, reusable and qualitative healthcare</span><span class="mono">VLAIO</span><span class="mono">05/2022–04/2024</span><span class="status done">Completed</span></div>
+      <div class="fund-row"><span>PRINT-4-POCT — millifluidic devices for point-of-care testing</span><span class="mono">BOF</span><span class="mono">05/2020–04/2024</span><span class="status done">Completed</span></div>
+    </div>
+
+    <div class="proj">
+      <div>
+        <span class="proj-num">PROJECT 01</span>
+        <h3>Microneedle sensor for immunosuppressants</h3>
+      </div>
+      <div>
+        <p>A wearable, minimally-invasive sensor to monitor immunosuppressant levels in transplant patients — built on a 3D-printed solid microneedle array. It is the project that most exposed the gap between a working bench prototype and a device that can legally touch a patient.</p>
+        <p>The photopolymer resin used for the printed microneedle array turned out not to be biocompatible — unsuitable for any human study. An IOF proof-of-concept application to bridge that gap was turned down, on the basis that a porcine model wasn't considered close enough to human physiology to justify the investment. Rather than stall, the platform was proven out on a living organism that needs neither ethical approval nor pre-clinical trials: a houseplant.</p>
+        <div class="proj-cite">Parrilla, M., Steijlen, A., Kerremans, R., Jacobs, J., den Haan, L., De Vreese, J., Van Noten Géron, Y., Clerx, P., <strong>Watts, R.</strong> &amp; De Wael, K. "Wearable platform based on 3D-printed solid microneedle potentiometric pH sensor for plant monitoring." <em>Chemical Engineering Journal</em> 500 (2024): 157254.</div>
+        <div class="proj-stats">
+          <div class="proj-stat"><span class="v">10.2 N</span><span class="l">Adhesion, porcine skin</span></div>
+          <div class="proj-stat"><span class="v">IPX7</span><span class="l">Ingress rating tested</span></div>
+          <div class="proj-stat"><span class="v">~90 µm</span><span class="l">Microneedle tip</span></div>
+          <div class="proj-stat"><span class="v">67</span><span class="l">Citations to date</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj">
+      <div>
+        <span class="proj-num">PROJECT 02</span>
+        <h3>Wearable biosensors with A-PECS</h3>
+      </div>
+      <div>
+        <p>Alongside the microneedle work, the lab builds the wearable hardware for a run of potentiometric and electrochemical sensors developed with the A-PECS electrochemistry group (Prof. Karolien De Wael): a wristband phenylalanine sensor for PKU patients, and the solid-microneedle pH platform that underpins the immunosuppressant work above.</p>
+        <p>The lab's contribution sits at the mechanical end — 3D-printed enclosures, wearable form factors, and adhesion/penetration/ingress testing on porcine and human skin before anything is trusted against a person.</p>
+        <div class="proj-stats">
+          <div class="proj-stat"><span class="v">87</span><span class="l">Citations — phenylalanine sensor</span></div>
+          <div class="proj-stat"><span class="v">122</span><span class="l">Citations — pH microneedle sensor</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj">
+      <div>
+        <span class="proj-num">PROJECT 03</span>
+        <h3>From concept to clinical trial</h3>
+      </div>
+      <div>
+        <p>Every device in the lab eventually has to answer to the same regulated pathway. None of the current projects are past P1 yet — the point is to keep building use cases, evidence and trust so that the investment in a full clinical study is one worth making.</p>
+        <div class="pathway">
+          <div class="pathway-step"><span class="p">P1</span><span class="l">Requirements &amp; risk analysis</span></div>
+          <div class="pathway-step"><span class="p">P2</span><span class="l">Design &amp; development</span></div>
+          <div class="pathway-step"><span class="p">P3</span><span class="l">Verification &amp; validation</span></div>
+          <div class="pathway-step"><span class="p">P4</span><span class="l">Commercialisation</span></div>
+          <div class="pathway-step"><span class="p">P5</span><span class="l">Post-market</span></div>
+        </div>
+        <p style="margin-top:14px; font-size:13px;">Regulated under MDR 2017/745 (or IVDR 2017/746) and ISO 13485:2016.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-soft" id="masterprojects">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-kicker">05 — Masterprojects done</span>
+      <h2>Master's theses, Product Development</h2>
+      <p>Selected master's theses supervised through the lab. Confidential work is listed by title only, at the request of the external partner involved.</p>
+    </div>
+
+    <div class="mp-list">
+      <div class="mp-card">
+        <div>
+          <span class="mp-year">2023–2024</span>
+          <span class="mp-status">Public</span>
+        </div>
+        <div>
+          <h3>Lumeco — a reusable continuous glucose monitor</h3>
+          <p>A continuous glucose monitoring system built around reusable components, collected and reintroduced into the production process at end of use — a sustainable alternative to the disposable CGM sensors that currently dominate the market, without asking patients or clinicians to give up ease of use.</p>
+          <span class="who">Tobías Van Oudheusden · internal promotor Regan Watts</span>
+        </div>
+      </div>
+      <div class="mp-card">
+        <div>
+          <span class="mp-year">2023–2024</span>
+          <span class="mp-status">Confidential</span>
+        </div>
+        <div>
+          <h3>Steerable, reusable heart stabiliser for off-pump CABG</h3>
+          <p>A masters thesis developed with an external clinical/industry partner. Details are confidential at the partner's request — listed here by title only.</p>
+          <span class="who">Jolien De Wulf · internal promotor Regan Watts</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="mp-table-intro">Every masterproef supervised since 2019 — 32 projects, tagged against the UN Sustainable Development Goals they touch. The partner column is the real story: hospitals, drone logistics, industrial materials and consumer brands, side by side.</p>
+    <div class="mp-table-wrap">
+      <table class="mp-table">
+        <thead><tr><th>Title</th><th>Student(s)</th><th>Partner</th><th>SDG</th><th>Keywords</th></tr></thead>
+        <tbody>
+          <tr class="yr-row"><td colspan="5">2024 – 2025</td></tr>
+          <tr><td class="title">Schadebeperking kraaiachtigen in landbouw</td><td>Stan Caerts</td><td>INBO</td><td><span class="sdg">SDG 15</span></td><td class="kw">Agriculture, Nature, Sustainable Food</td></tr>
+          <tr><td class="title">Medical Isotope Payload</td><td>Nard Voets</td><td>Helicus</td><td><span class="sdg">SDG 3 &amp; 9</span></td><td class="kw">Drones, Nuclear Med, Logistics</td></tr>
+          <tr><td class="title">Wearable for equine sweat analysis</td><td>Luca de Wilde</td><td>A-PECS</td><td><span class="sdg">SDG 3</span></td><td class="kw">Wearables, Sensors, Veterinary</td></tr>
+          <tr><td class="title">Mondzorg in woonzorgcentra</td><td>Baptiste Depauw</td><td>UGent</td><td><span class="sdg">SDG 3</span></td><td class="kw">Gerodontology, Care, Medical</td></tr>
+          <tr><td class="title">Modulaire elektronica voor burgerwetenschap</td><td>Stan de Haas</td><td>SuperEllipse</td><td><span class="sdg">SDG 4 &amp; 9</span></td><td class="kw">Citizen Science, IoT, Modular</td></tr>
+
+          <tr class="yr-row"><td colspan="5">2023 – 2024</td></tr>
+          <tr><td class="title">Lumeco — duurzame CGM sensor</td><td>Tobías Van Oudheusden</td><td>UZA</td><td><span class="sdg">SDG 3 &amp; 12</span></td><td class="kw">Diabetes, Sensors, Circular</td></tr>
+          <tr><td class="title">Pijndocumentatie sikkelcelziekte</td><td>Anton Voordeckers</td><td>UZA</td><td><span class="sdg">SDG 3</span></td><td class="kw">Sickle Cell, Patient Data, App</td></tr>
+          <tr><td class="title">Interior for semi-autonomous freighters</td><td>Birgit Bulcke</td><td>VIAS</td><td><span class="sdg">SDG 9 &amp; 11</span></td><td class="kw">Freight, UX, Autonomous</td></tr>
+          <tr><td class="title">Search and rescue payload</td><td>Samuel Curtis</td><td>Helicus</td><td><span class="sdg">SDG 9</span></td><td class="kw">Drones, SAR, Emergency</td></tr>
+          <tr><td class="title">Wearable microneedle-based sensor</td><td>Phil Clerx</td><td>A-PECS</td><td><span class="sdg">SDG 3 &amp; 9</span></td><td class="kw">MedTech, Microneedles, Sensors</td></tr>
+          <tr><td class="title">Steerable endoscopic heart stabiliser (confidential)</td><td>Jolien De Wulf</td><td>Surgical Robotics, KU Leuven</td><td><span class="sdg">SDG 3</span></td><td class="kw">Surgery, Robotics, Heart</td></tr>
+
+          <tr class="yr-row"><td colspan="5">2022 – 2023</td></tr>
+          <tr><td class="title">Grabl — gloves for hypohidrosis</td><td>Sem Nuhr</td><td>UZA</td><td><span class="sdg">SDG 3</span></td><td class="kw">Dermatology, Wearables, Medical</td></tr>
+          <tr><td class="title">Mobile cleanroom</td><td>Sam Van Cauwenberghe</td><td>Voxdale</td><td><span class="sdg">SDG 3 &amp; 9</span></td><td class="kw">Pharma, Modular, Cleanroom</td></tr>
+          <tr><td class="title">Blind assistance via haptic sensors</td><td>Romeo Offeciers</td><td>ZAS</td><td><span class="sdg">SDG 3 &amp; 10</span></td><td class="kw">Inclusion, Haptics, Assistive Tech</td></tr>
+          <tr><td class="title">Reusable pillow for neurosurgery</td><td>Kobe Schoofs</td><td>Ergotrics</td><td><span class="sdg">SDG 3 &amp; 12</span></td><td class="kw">Reuse, Neurosurgery, Medical</td></tr>
+          <tr><td class="title">Reusable windscreen wipers</td><td>Juline De Lepeleire</td><td>Bosch</td><td><span class="sdg">SDG 12</span></td><td class="kw">Circular, Automotive, Reuse</td></tr>
+          <tr><td class="title">Organ transplant drone</td><td>Gyor Janssen</td><td>Helicus / UZA</td><td><span class="sdg">SDG 3 &amp; 9</span></td><td class="kw">Logistics, Drones, Surgery</td></tr>
+
+          <tr class="yr-row"><td colspan="5">2021 – 2022</td></tr>
+          <tr><td class="title">Hybride binnenlucht reiniging</td><td>Sep Sauter</td><td>Vento</td><td><span class="sdg">SDG 3 &amp; 11</span></td><td class="kw">Air Quality, Healthy Homes</td></tr>
+          <tr><td class="title">Zindelijkheidstraining</td><td>Charlotte Schippers</td><td>Minze</td><td><span class="sdg">SDG 3</span></td><td class="kw">Pediatrics, MedTech, Behaviour</td></tr>
+          <tr><td class="title">AED drone levering</td><td>Sara Huysmans</td><td>Helicus</td><td><span class="sdg">SDG 3 &amp; 9</span></td><td class="kw">Drones, Emergency, AED</td></tr>
+          <tr><td class="title">Laden van elektrische wagens in de stad</td><td>Brent Mantels</td><td>ABB</td><td><span class="sdg">SDG 7 &amp; 11</span></td><td class="kw">EV Charging, Mobility, Urban</td></tr>
+          <tr><td class="title">Onbemande aan- en afmeersystemen</td><td>Simon Etienne</td><td>HZS</td><td><span class="sdg">SDG 9 &amp; 11</span></td><td class="kw">Shipping, Automation, Freight</td></tr>
+          <tr><td class="title">SAR — search and rescue</td><td>Wouter Dirx</td><td>Helicus</td><td><span class="sdg">SDG 9</span></td><td class="kw">Drones, Robotics, SAR</td></tr>
+
+          <tr class="yr-row"><td colspan="5">2020 – 2021</td></tr>
+          <tr><td class="title">O2HOME — smart patient companion</td><td>Lukas van Nunen</td><td>OxyPoint</td><td><span class="sdg">SDG 3</span></td><td class="kw">Home Care, Oxygen, Medical</td></tr>
+          <tr><td class="title">Positiecontrole neusmaagsondes</td><td>Kaz van Zegveld</td><td>UZA</td><td><span class="sdg">SDG 3</span></td><td class="kw">Pediatrics, Safety, MedTech</td></tr>
+          <tr><td class="title">MJF-printen van sensoren</td><td>Arthur Verburgh</td><td>OrthoBroker</td><td><span class="sdg">SDG 3 &amp; 9</span></td><td class="kw">3D Printing, Sensors, Ortho</td></tr>
+          <tr><td class="title">3D-printen van een muisfantoom</td><td>Simon Rijnberg</td><td>GZA</td><td><span class="sdg">SDG 3 &amp; 9</span></td><td class="kw">Research, 3D Printing, Oncology</td></tr>
+          <tr><td class="title">Gezond ventileren</td><td>René Koenders</td><td>Orcon</td><td><span class="sdg">SDG 3 &amp; 11</span></td><td class="kw">HVAC, Healthy Homes, Air</td></tr>
+          <tr><td class="title">Idealised 2D pattern for the non-ideal 3D head</td><td>Nam Nhat Nguyen</td><td>Mondmaskers</td><td><span class="sdg">SDG 3</span></td><td class="kw">COVID, PPE, Design</td></tr>
+
+          <tr class="yr-row"><td colspan="5">2019 – 2020</td></tr>
+          <tr><td class="title">Tailored CPR voor de MUG</td><td>Emmeline Van Obergen</td><td>ZAS</td><td><span class="sdg">SDG 3</span></td><td class="kw">Emergency, CPR, Medical</td></tr>
+          <tr><td class="title">Process optimisation for cell therapy products</td><td>Stijn Liekens</td><td>AniCells</td><td><span class="sdg">SDG 3 &amp; 9</span></td><td class="kw">Biotech, Process Design, Medical</td></tr>
+          <tr><td class="title">Drone cargo port</td><td>Pysson, DeBondt, Molkens, Van Eysendeyk</td><td>Helicus</td><td><span class="sdg">SDG 9 &amp; 11</span></td><td class="kw">Drones, Logistics, Aviation</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="band-accent" id="collaborate">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-kicker">06 — How we collaborate</span>
+      <h2>Four ways in</h2>
+      <p>Thirty-two masters theses and counting is the clearest evidence: this lab is built to work across disciplines, hospitals, companies and universities, not inside one building.</p>
+    </div>
+    <div class="collab-grid">
+      <div class="collab-card">
+        <span class="cnum">01</span>
+        <h3>Joint master's thesis</h3>
+        <p>A company, hospital department or research group brings a real problem; a Product Development student spends a year on it, co-supervised from both sides.</p>
+        <div class="ex"><strong>Partners:</strong> UZA, Helicus, A-PECS, Bosch, ABB, Voxdale, OxyPoint, INBO — 32 projects since 2019</div>
+      </div>
+      <div class="collab-card">
+        <span class="cnum">02</span>
+        <h3>Applied R&amp;D &amp; proof-of-concept</h3>
+        <p>Funded projects that carry an idea from lab bench toward something a company or hospital can actually adopt — IOF, VLAIO, BOF and FWO all fund different stages of that path.</p>
+        <div class="ex"><strong>Current:</strong> NeoVOC, SafeTrawl I &amp; II, TEAMBIO, INFLUXO, REmedi</div>
+      </div>
+      <div class="collab-card">
+        <span class="cnum">03</span>
+        <h3>Cross-institution &amp; cross-discipline research</h3>
+        <p>Work that only happens by pairing measurement and prototyping with expertise the lab doesn't have in-house — electrochemistry, biomedical imaging, ecology, robotics.</p>
+        <div class="ex"><strong>With:</strong> Els Du Bois (REuse Lab) &amp; Karolien De Wael (A-PECS) on Nature4Nature · Tom Breugelmans on electrochemistry · Winnok De Vos &amp; Jan Sijbers on biomedical imaging · KU Leuven Surgical Robotics</div>
+      </div>
+      <div class="collab-card">
+        <span class="cnum">04</span>
+        <h3>Spin-off &amp; start-up formation</h3>
+        <p>When a proof-of-concept clears the bar, the lab's own track record is that it doesn't stop at the paper: co-founder of Southern Photonics (2001), whose daughter company Quantifi Photonics was acquired by NASDAQ-listed Teradyne for USD $127M in March 2025; and Medimundi NV (2020), which took FFP2/FFP3 respirator design from patent to production line during COVID-19.</p>
+        <div class="ex"><strong>Evidence of the appetite:</strong> patents as the output that matters, not just the paper — the Medimundi patents alone unlocked multi-million-dollar investment in production.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-raised" id="infrastructure">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-kicker">07 — Infrastructure</span>
+      <h2>The room itself</h2>
+      <p>50 m² on the Stadscampus, built for the full loop from CAD file to sterilised, tested device. Most problems that arrive from industry or a masters thesis get solved the same way: build a testopstelling — a purpose-built rig — that isolates the one design parameter in question, then measure until the answer is unambiguous. Plus access to the wider Antwerp Design Factory for anything the lab itself can't handle.</p>
+    </div>
+
+    <div class="spec-sheet">
+      <div class="spec-row">
+        <div class="k">Footprint</div>
+        <div class="v"><strong>50 m²</strong> dedicated lab space, Stadscampus, Antwerp</div>
+      </div>
+      <div class="spec-row">
+        <div class="k">Assembly</div>
+        <div class="v">Cleanroom assembly bench for sterile / semi-sterile device build</div>
+      </div>
+      <div class="spec-row">
+        <div class="k">Inspection</div>
+        <div class="v">Microscopy and validation station for component and surface inspection</div>
+      </div>
+      <div class="spec-row">
+        <div class="k">Textiles</div>
+        <div class="v">Ultrasonic welders for medical textiles (reusable gowns, drapes, kits)</div>
+      </div>
+      <div class="spec-row">
+        <div class="k">Sterilisation</div>
+        <div class="v">Autoclave and glassware dishwasher for sterilisation and hygiene testing, including ClO₂ validation</div>
+      </div>
+      <div class="spec-row">
+        <div class="k">Mechanical testing</div>
+        <div class="v">Tensile testing machine, run to standards such as <strong>ISO 1924-2</strong> for material and seam strength</div>
+      </div>
+      <div class="spec-row">
+        <div class="k">Fabrication</div>
+        <div class="v">
+          <div class="chips">
+            <span class="chip">Vacuum forming</span>
+            <span class="chip">Laser cutting</span>
+            <span class="chip">CNC milling</span>
+            <span class="chip">Casting</span>
+            <span class="chip">mSLA</span>
+            <span class="chip">SLA</span>
+            <span class="chip">FFF</span>
+            <span class="chip">SLS</span>
+          </div>
+        </div>
+      </div>
+      <div class="spec-row">
+        <div class="k">Beyond the lab</div>
+        <div class="v">Pre-incubation, prototyping and event space through the <a href="#" style="color:var(--accent-strong)">Antwerp Design Factory</a>, shared with the Augmented Crafting, Human, REuse, Service Design and Systemic Design labs</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="two-col">
+      <div>
+        <div class="sec-head" style="margin-bottom:24px;">
+          <span class="sec-kicker">08 — Education &amp; collaboration</span>
+          <h2>Teaching the method</h2>
+        </div>
+        <div class="edu-item">
+          <span class="tag">ARCHES</span>
+          <h4>ARCHES</h4>
+          <p>The lab contributes hands-on measurement, prototyping and testing modules to the ARCHES programme.</p>
+        </div>
+        <div class="edu-item">
+          <span class="tag">TDD — MODULE 1</span>
+          <h4>TDD, Module 1</h4>
+          <p>Lab-based physical measurement and prototyping teaching within TDD Module 1.</p>
+        </div>
+        <div class="edu-item">
+          <span class="tag">ADF</span>
+          <h4>Antwerp Design Factory</h4>
+          <p>Regan Watts sits on the core Antwerp Design Factory team, which runs the master-thesis-to-market pipeline connecting student projects to companies over a two-year partnership: thesis year, then a valorisation year building toward a business case and pre-incubation.</p>
+        </div>
+      </div>
+
+      <div id="sectors">
+        <div class="sec-head" style="margin-bottom:24px;">
+          <span class="sec-kicker">09 — Other sectors</span>
+          <h2>Measurement beyond medical</h2>
+        </div>
+        <div class="sector-card">
+          <span class="yr">2023</span>
+          <h4>Smart docking LiDAR</h4>
+          <p>A LiDAR-based sensor for the Port of Antwerp that measures a ship's approach to its mooring bollard in real time.</p>
+        </div>
+        <div class="sector-card">
+          <span class="yr">2022</span>
+          <h4>Lashing tool</h4>
+          <p>An ergonomic container-lashing tool designed around the anatomy of the dockworkers who use it, every shift.</p>
+        </div>
+        <div class="sector-card">
+          <span class="yr">2021</span>
+          <h4>Tugboat bridge redesign</h4>
+          <p>Ergonomic redesign of a tugboat wheelhouse — seating, joystick controls and console layout for the crew who work it.</p>
+        </div>
+        <div class="sector-card">
+          <span class="yr">2020</span>
+          <h4>Zero pellets loss</h4>
+          <p>Measurement-driven prevention of plastic-pellet spillage across a port logistics chain, from bulk loading to distribution.</p>
+        </div>
+        <div class="sector-card">
+          <span class="yr">2024–2027</span>
+          <h4>SafeTrawl I &amp; II</h4>
+          <p>Physical measurement work supporting the safety of trawl-net fishing gear, funded across two consecutive phases by PRIVE.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-raised" id="publications">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-kicker">10 — Publications</span>
+      <h2>Selected output</h2>
+      <p>A career that started in optical measurement and now runs through wearable biosensors and medical device design — 70+ peer-reviewed publications and over €2M in research funding secured from FP7, H2020, ESA, FWO, imec and BOF. Full list on Google Scholar, where the citation record actually lives.</p>
+    </div>
+
+    <div class="pub-metrics">
+      <div class="pub-metric"><span class="v">70+</span><span class="l">Peer-reviewed publications</span></div>
+      <div class="pub-metric"><span class="v">1,415</span><span class="l">Total citations</span></div>
+      <div class="pub-metric"><span class="v">19</span><span class="l">h-index</span></div>
+      <div class="pub-metric"><span class="v">€2M+</span><span class="l">Research funding secured</span></div>
+    </div>
+
+    <div class="pub-list">
+      <div class="pub-row">
+        <div>
+          <div class="title">3D-printed microneedle-based potentiometric sensor for pH monitoring in skin interstitial fluid</div>
+          <div class="authors">Parrilla, M., Vanhooydonck, A., Johns, M., Watts, R. &amp; De Wael, K.</div>
+          <div class="venue">Sensors and Actuators B: Chemical, 2023</div>
+        </div>
+        <div class="cites"><span class="n">122</span>citations</div>
+      </div>
+      <div class="pub-row">
+        <div>
+          <div class="title">Wearable wristband-based electrochemical sensor for phenylalanine detection</div>
+          <div class="authors">Parrilla, M., Vanhooydonck, A., De Wael, K. et al.</div>
+          <div class="venue">Biosensors and Bioelectronics, 2022</div>
+        </div>
+        <div class="cites"><span class="n">87</span>citations</div>
+      </div>
+      <div class="pub-row">
+        <div>
+          <div class="title">Wearable platform based on 3D-printed solid microneedle potentiometric pH sensor for plant monitoring</div>
+          <div class="authors">Parrilla, M., Steijlen, A., Kerremans, R., Jacobs, J., den Haan, L., Watts, R. et al.</div>
+          <div class="venue">Chemical Engineering Journal, 2024</div>
+        </div>
+        <div class="cites"><span class="n">67</span>citations</div>
+      </div>
+      <div class="pub-row">
+        <div>
+          <div class="title">Consumers' perceptions toward products preventing microfiber pollution in aquatic environments</div>
+          <div class="authors">Herweyers, L., Catarci Carteny, C., Scheelen, L., Du Bois, E. et al.</div>
+          <div class="venue">Sustainability, 2020</div>
+        </div>
+        <div class="cites"><span class="n">45</span>citations</div>
+      </div>
+      <div class="pub-row">
+        <div>
+          <div class="title">High performance mode locking characteristics of single section quantum dash lasers</div>
+          <div class="authors">Rosales, R., Murdoch, S. G., Merghem, K., Martinez, A., Lelarge, F. et al.</div>
+          <div class="venue">Optics Express, 2012</div>
+        </div>
+        <div class="cites"><span class="n">188</span>citations</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <span class="sec-kicker">11 — Get in touch</span>
+    <h2>Bring us a problem<br>worth measuring</h2>
+    <div class="plate">
+      <div>
+        <span class="k">Lead</span>
+        <a href="https://www.uantwerpen.be/en/staff/regan-watts/" target="_blank" rel="noopener">Prof. dr. Regan Watts →</a>
+      </div>
+      <div>
+        <span class="k">Research group</span>
+        <a href="https://www.uantwerpen.be/en/research-groups/product-development/" target="_blank" rel="noopener">Product Development, UAntwerp →</a>
+      </div>
+      <div>
+        <span class="k">Publications</span>
+        <a href="https://scholar.google.be/citations?user=gt9SsncAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar profile →</a>
+      </div>
+      <div>
+        <span class="k">Location</span>
+        <a href="#" style="pointer-events:none; color:#DCEAF1;">Stadscampus, Paardenmarkt 94, 2000 Antwerp</a>
+      </div>
+    </div>
+    <div class="bottom">
+      <span>The Measure Lab — Medical Device Design, Product Development, University of Antwerp</span>
+      <span>50 m² · est. lab space at UAntwerpen</span>
+    </div>
+  </div>
+</footer>
